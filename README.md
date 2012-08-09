@@ -1,33 +1,18 @@
-**License**
-========================
+# Hack: Icebreaker
 
-Copyright 2012 Facebook, Inc.
+Allows the participants of a presentation to go to the Icebreaker app and see Facebook Likes they have in common with others in the audience.
 
-You are hereby granted a non-exclusive, worldwide, royalty-free license to
-use, copy, modify, and distribute this software in source code or binary
-form for use in connection with the web services and APIs provided by
-Facebook.
+Authors: Matt Kelly (mattwkelly), Christine Abernathy (caabernathy)
 
-As with any software that integrates with the Facebook platform, your use
-of this software is subject to the [Facebook Developer Principles and
-Policies](http://developers.facebook.com/policy/). This copyright notice
-shall be included in all copies or substantial portions of the software.
+## What's a "Hack"?
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.
+We love talking to developers. Rather than talk over boring slides, we like diving straight into code and show devs how to build a new app from scratch.
 
+Most hacks are built for a specifically presentation and may not be updated afterward.  So it's important to note that THIS CODE MAY NOT BE MAINTAINED ANY MORE and could contain bugs.  We always accept pull requests if you spot anything, though!
 
-**Icebreaker Mobile Web Demo**
-========================
+## Installing
 
-This README will guide you through the Icebreaker web app demo. This package contains the initial web app and the completed web app. The initial web app is your starting point for the demo steps. You can use the completed web app as a reference if you run into any issues.
-
-This README will walk you through the following:
+This section will walk you through the following:
 
 * Getting Started
 * Creating your Facebook app
@@ -36,8 +21,7 @@ This README will walk you through the following:
 * Installing the web app
 * Stepping through the demo
 
-**Getting Started**
-===================
+### Getting Started
 
 Your install package should include the files containing the Icebreaker server side PHP files. This includes the completed and initial demo web app.
 
@@ -49,16 +33,14 @@ To get the sample code do the following:
 
              git clone git://github.com/fbsamples/mobile-web-icebreaker
 
-**Creating your Facebook app**
-==============================
+### Creating your Facebook app
 
 First set up a Facebook app using the Developer app:
 
 * Create a new [Facebook app](https://developers.facebook.com/apps)
 * Enter the `App Namespace` when creating your app. You can choose a simple string to identify your app, such as ''icebreaker'', but it must be unique.
 
-**Setting up the the backend server using Heroku Cloud Services**
-==========================
+### Setting up the the backend server using Heroku Cloud Services
 
 You can always use your own backend server and database to host the web app files. These instructions apply if you choose to use the Heroku Cloud Services.
 
@@ -87,7 +69,7 @@ You can always use your own backend server and database to host the web app file
   * For the files index_complete.html and api.php wherever you find them, replace:
      * `YOUR_APP_ID` with your app ID
      * `YOUR_APP_SECRET` with your app secret
-     * `YOUR_HOST_URL` with your Heroku hosting URL 
+     * `YOUR_HOST_URL` with your Heroku hosting URL
   * Modify db.php and replace:
      * `YOUR_DB_USERNAME` with your database's username
      * `YOUR_DB_PASSWORD` with your database's password
@@ -98,8 +80,7 @@ You can always use your own backend server and database to host the web app file
     * git commit -am "icebreaker"
     * git push heroku master
 
-**Setting up the the backend server using your own hosting**
-==========================
+### Setting up the the backend server using your own hosting
 
 You can run the sample web app if you have hosting that includes a MySQL server. If you follow the steps below you do not need to set up Heroku.
 
@@ -122,8 +103,7 @@ You can run the sample web app if you have hosting that includes a MySQL server.
      * `YOUR_DB_NAME` with your database name
 
 
-**Installing the web app**
-==========================
+### Installing the web app
 
 **Installing the database tables**
 
@@ -132,8 +112,7 @@ You can run the sample web app if you have hosting that includes a MySQL server.
 
 Note: If you want to check the completed demo that is part of the package, then overwrite the index.html file with index_complete.html. Be sure to make a backup of the initial index.html if you still wish to step through the demo.
 
-**Stepping through the demo**
-=============================================================================
+### Stepping through the demo
 
 **Notes: Checking in code**
 
@@ -165,29 +144,29 @@ The text is too small when viewed on a mobile device. Set the viewport by adding
 * Include the Facebook JavaScript SDK, instantiate the Facebook instance, and monitor authorization status changes. Add the following code inside the &lt;body> tag
 
         <div id="fb-root"></div>
-  
+
         <script>
         (function() {
           var e = document.createElement('script'); e.async = true;
           e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
           document.getElementById('fb-root').appendChild(e);
-          }())        
+          }())
         window.fbAsyncInit = function() {
-          FB.init({ appId: 'YOUR_APP_ID', 
-          status: true, 
+          FB.init({ appId: 'YOUR_APP_ID',
+          status: true,
           cookie: true,
           xfbml: true,
-          oauth: true})        
-          FB.Event.subscribe('auth.statusChange', handleStatusChange);	
+          oauth: true})
+          FB.Event.subscribe('auth.statusChange', handleStatusChange);
         };
-               
+
         function handleStatusChange(response) {
           console.log(response);
         }
-        
+
         </script>
- 
-  
+
+
   Replace _YOUR_APP_ID_ with your app ID.
 
 * Add a link to allow the user to log in.
@@ -195,13 +174,13 @@ The text is too small when viewed on a mobile device. Set the viewport by adding
           <div id="user-info">Hello<br>
               <a href="#" onclick="login();">Login</a><br>
           </div>
-  
+
 * Add a JavaScript function to handle login clicks.
 
           function login() {
             FB.login(function(response) { }, {scope:'user_likes'});
           }
-  
+
 
 **Step 3: Personalization**
 
@@ -216,58 +195,58 @@ When the user is authenticated personalize the user interface by displaying thei
               updateUserInfo(response);
             }
           }
-      
+
           function updateUserInfo(response) {
             FB.api('/me&fields=likes,id,name', function(response) {
               document.getElementById('user-info').innerHTML = '<img src="https://graph.facebook.com/' + response.id + '/picture">' + response.name;
             });
           }
-    
+
 **Step 4: Add Social Design**
 
 Add code to get a user's common likes and compare them against likes from users that are stored in a database.
 
 * Add the following code to the &lt;head> tag
 
-          <script src="jquery-1.5.1.min.js"></script> 
+          <script src="jquery-1.5.1.min.js"></script>
 
 * Add the following code to the in the auth response handler
 
           getCommonLikes(response);
-  
+
 * Add the following code in the script tag in the &lt;body> tag
 
         function getCommonLikes(response) {
             var output = '';
-      
+
             $(document).ready(function () {
               $.ajax({url: 'api.php', type: "POST", dataType: 'json', data: { method: "getCommonLikes", location: location.coords }, success: function(data) {
               output = '';
-        
+
               console.log(data);
-        
+
               for (var i = 0; i < data.likes.length; i++) {
                 output += '<h3>' + data.likes[i].like_name + '</h3>';
-            
+
                 if (data.likes[i].uids) {
                   output += '<h4>Shared with</h4><div id="user-friends">';
                   for (var n = 0; n < data.likes[i].uids.length; n++) {
                     output += '<img src="http://graph.facebook.com/' + data.likes[i].uids[n].id + '/picture"> ' + data.likes[i].uids[n].name;
                   }
-              
+
                   output += '</div><br><br>';
                 }
               }
-          
+
               $("body").append(output);
               console.log(output);
             }});
           });
         }
-  
+
 **Step 5: Add Social Channels: News Feed, Requests, Social Plugins**
 
-  
+
 * Add the following code to the script tag in the &lt;body> tag
 
         function publishStory() {
@@ -278,27 +257,27 @@ Add code to get a user's common likes and compare them against likes from users 
                 description: 'Check out Facebook\'s developer site to start building.',
                 link: 'https://morning-day-3487.herokuapp.com/icebreaker/',
                 picture: 'http://www.facebookmobileweb.com/hackbook/img/facebook_icon_large.png'
-            }, 
+            },
             function(response) {
                 console.log('publishStory response: ', response);
             });
             return false;
         }
-   
+
         function sendRequest() {
             FB.ui({
                 method: 'apprequests',
                 message: 'Check out this awesome app!'
-            }, 
+            },
             function(response) {
                 console.log('sendRequest response: ', response);
             });
         }
- 
 
-  
+
+
 * Add the following code before the end of the &lt;body> tag
-  
+
         <br>
             <a href="#" onclick="publishStory();">Publish feed story</a><br><br>
         <a href="#" onclick="sendRequest();">Send request</a><br><br>
@@ -306,4 +285,17 @@ Add code to get a user's common likes and compare them against likes from users 
             <fb:like width="250"></fb:like>
         </div>
         <fb:comments href="https://morning-day-3487.herokuapp.com/icebreaker/" num_posts="2" width="300"></fb:comments>
-    
+
+## Contributing
+
+All contributors must agree to and sign the [Facebook CLA](https://developers.facebook.com/opensource/cla) prior to submitting Pull Requests. We cannot accept Pull Requests until this document is signed and submitted.
+
+## License
+
+Copyright 2012-present Facebook, Inc.
+
+You are hereby granted a non-exclusive, worldwide, royalty-free license to use, copy, modify, and distribute this software in source code or binary form for use in connection with the web services and APIs provided by Facebook.
+
+As with any software that integrates with the Facebook platform, your use of this software is subject to the Facebook Developer Principles and Policies [http://developers.facebook.com/policy/]. This copyright notice shall be included in all copies or substantial portions of the software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
